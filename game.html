@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Workshop Registration | IEEE Access</title>
+    <style>
+        /* --- CORE VARIABLES --- */
+        :root {
+            --bg-color: #050510;
+            --neon-blue: #00f3ff;
+            --neon-pink: #bc13fe;
+            --grid-color: rgba(0, 243, 255, 0.1);
+            --text-main: #e0faff;
+            --glass: rgba(0, 243, 255, 0.03);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            /* Fixes perspective on mobile */
+            perspective: 1000px;
+        }
+
+        /* --- HEADER STYLES --- */
+        .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), transparent);
+            pointer-events: none;
+        }
+
+        .logo-container {
+            pointer-events: auto;
+            display: flex;
+            align-items: center;
+        }
+
+        .ieee-logo {
+            height: 50px;
+            width: auto;
+            filter: drop-shadow(0 0 5px var(--neon-blue));
+            transition: all 0.3s ease;
+        }
+
+        .header-text {
+            font-size: 0.75rem;
+            color: var(--neon-blue);
+            opacity: 0.8;
+            text-align: right;
+            border-right: 2px solid var(--neon-pink);
+            padding-right: 15px;
+            line-height: 1.2;
+        }
+
+        /* --- BACKGROUND FX --- */
+        .bg-grid {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            bottom: -50%;
+            background-image:
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 40px 40px;
+            transform: rotateX(60deg);
+            animation: gridMove 20s linear infinite;
+            z-index: -2;
+            opacity: 0.4;
+        }
+
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0.2));
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        @keyframes gridMove {
+            0% {
+                transform: rotateX(60deg) translateY(0);
+            }
+
+            100% {
+                transform: rotateX(60deg) translateY(40px);
+            }
+        }
+
+        /* --- MAIN UI CARD --- */
+        .hud-container {
+            width: 90%;
+            max-width: 700px;
+            /* Fix height issues on mobile */
+            max-height: 80vh;
+            overflow-y: auto;
+            /* Allow scroll if content is too tall */
+
+            background: var(--glass);
+            border: 1px solid var(--neon-blue);
+            position: relative;
+            padding: 40px;
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.15), inset 0 0 20px rgba(0, 243, 255, 0.05);
+            backdrop-filter: blur(5px);
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 95% 100%, 0 100%, 0 15%);
+            margin-top: 40px;
+
+            /* Custom Scrollbar for HUD */
+            scrollbar-width: thin;
+            scrollbar-color: var(--neon-blue) transparent;
+        }
+
+        /* Decorative Corners */
+        .hud-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 60px;
+            height: 60px;
+            border-top: 3px solid var(--neon-blue);
+            border-left: 3px solid var(--neon-blue);
+        }
+
+        .hud-container::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 40px;
+            height: 40px;
+            border-bottom: 3px solid var(--neon-blue);
+            border-right: 3px solid var(--neon-blue);
+        }
+
+        /* --- TYPOGRAPHY --- */
+        h1 {
+            text-transform: uppercase;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 0 var(--neon-pink), -2px 0 var(--neon-blue);
+            letter-spacing: 3px;
+            line-height: 1.1;
+        }
+
+        .subtitle {
+            color: var(--neon-blue);
+            font-size: 1rem;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--neon-blue);
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        /* --- CYBER BUTTONS --- */
+        .cyber-grid {
+            display: grid;
+            /* Auto-fit makes it responsive: columns wrap automatically */
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+            padding-bottom: 10px;
+            /* Space for scroll */
+        }
+
+        button {
+            background: rgba(0, 0, 0, 0.6);
+            border: none;
+            color: var(--neon-blue);
+            padding: 15px 10px;
+            /* Reduced padding for mobile */
+            font-family: inherit;
+            font-size: 0.95rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            position: relative;
+            transition: all 0.2s ease;
+            clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
+            box-shadow: inset 0 0 0 1px var(--neon-blue);
+
+            /* Disable blue highlight tap on Android/iOS */
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Desktop Hover */
+        @media (hover: hover) {
+            button:hover {
+                background: var(--neon-blue);
+                color: #000;
+                box-shadow: 0 0 20px var(--neon-blue);
+                transform: translateY(-2px);
+            }
+        }
+
+        /* Mobile Tap (Active State) */
+        button:active {
+            background: var(--neon-blue);
+            color: #000;
+            box-shadow: 0 0 25px var(--neon-blue);
+            transform: scale(0.98);
+        }
+
+        .btn-glitch {
+            font-size: 1.3rem;
+            padding: 20px 40px;
+            background: transparent;
+            box-shadow: inset 0 0 0 2px var(--neon-pink);
+            color: var(--neon-pink);
+            width: 100%;
+            /* Full width on mobile looks better */
+            max-width: 300px;
+        }
+
+        .btn-glitch:active,
+        .btn-glitch:hover {
+            background: var(--neon-pink);
+            color: #fff;
+            box-shadow: 0 0 30px var(--neon-pink);
+        }
+
+        .back-btn {
+            margin-top: 30px;
+            opacity: 0.7;
+            font-size: 0.8rem;
+            box-shadow: inset 0 0 0 1px #fff;
+            color: #fff;
+            width: auto;
+            min-width: 120px;
+        }
+
+        .back-btn:active,
+        .back-btn:hover {
+            background: #fff;
+            color: #000;
+            box-shadow: 0 0 10px #fff;
+        }
+
+        .screen {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .screen.active {
+            display: block;
+            opacity: 1;
+            animation: textFlicker 0.2s ease forwards;
+        }
+
+        .system-status {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 0.6rem;
+            color: var(--neon-blue);
+            opacity: 0.6;
+        }
+
+        /* --- MOBILE MEDIA QUERIES --- */
+        @media screen and (max-width: 768px) {
+            .site-header {
+                padding: 15px;
+                background: rgba(0, 0, 0, 0.8);
+            }
+
+            .hud-container {
+                width: 95%;
+                padding: 25px 15px;
+                min-height: auto;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+                /* Smaller title */
+            }
+
+            .cyber-grid {
+                /* On phones, force 2 columns for better touch targets */
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            button {
+                font-size: 0.85rem;
+                padding: 12px 5px;
+            }
+        }
+
+        /* --- SMALL PHONE ADJUSTMENTS --- */
+        @media screen and (max-width: 480px) {
+            .site-header {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+                padding-top: 20px;
+            }
+
+            .header-text {
+                text-align: left;
+                border-right: none;
+                border-left: 2px solid var(--neon-pink);
+                padding-left: 10px;
+                font-size: 0.65rem;
+            }
+
+            .hud-container {
+                margin-top: 80px;
+                /* More space for stacked header */
+                padding: 20px 10px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .btn-glitch {
+                padding: 15px 20px;
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="bg-grid"></div>
+    <div class="scanlines"></div>
+
+    <header class="site-header">
+        <div class="logo-container">
+            <img src="image.png" alt="IEEE LOGO" class="ieee-logo"
+                onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:var(--neon-blue); font-weight:bold;\'>[IEEE_SB]</span>'">
+        </div>
+        <div class="header-text">
+            SECURE_NET // IEEE_SB<br>
+            AUTH_REQ: VERIFIED
+        </div>
+    </header>
+
+    <div class="hud-container">
+        <div class="system-status">SYS.MOBILE // V.2.1</div>
+
+        <div id="screen-welcome" class="screen active" style="text-align: center; padding-top: 20px;">
+            <h1>Game Dev <br> Workshop</h1>
+            <p class="subtitle">REGISTRATION SEQUENCE</p>
+            <br>
+            <button class="btn-glitch" onclick="goToScreen('screen-dept')">Start Mission</button>
+        </div>
+
+        <div id="screen-dept" class="screen">
+            <h1>Identity Check</h1>
+            <p class="subtitle">SELECT FACTION</p>
+
+            <div class="cyber-grid">
+                <button onclick="selectDept('CS')">CSE</button>
+                <button onclick="selectDept('EEE')">EEE</button>
+                <button onclick="selectDept('ME')">MECH</button>
+                <button onclick="selectDept('CE')">CIVIL</button>
+            </div>
+
+            <div style="text-align: center;">
+                <button class="back-btn" onclick="goToScreen('screen-welcome')"> &lt; ABORT </button>
+            </div>
+        </div>
+
+        <div id="screen-year" class="screen">
+            <h1>Level Select</h1>
+            <p class="subtitle" id="dept-display">TARGET: UNKNOWN</p>
+
+            <div class="cyber-grid">
+                <button onclick="goToForm('1')">LVL 01 (1st Year)</button>
+                <button onclick="goToForm('2')">LVL 02 (2nd Year)</button>
+                <button onclick="goToForm('3')">LVL 03 (3rd Year)</button>
+                <button onclick="goToForm('4')">LVL 04 (4th Year)</button>
+            </div>
+
+            <div style="text-align: center;">
+                <button class="back-btn" onclick="goToScreen('screen-dept')"> &lt; BACK </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentDept = '';
+
+        // *** CONFIGURATION: PASTE GOOGLE FORM LINKS HERE ***
+        const formLinks = {
+            'CS': 'https://docs.google.com/forms/d/e/1FAIpQLSex5OZzz7ullF5eGFY3V3pPbp-D6qjkDxdNkVNyud7jimEjEg/viewform?usp=dialog',
+            'ME': 'https://docs.google.com/forms/d/e/1FAIpQLSf4XxTT_Ibh9isDkYyYZ5tZA5anXZZp4a-cup0RmmKf3w-uYQ/viewform?usp=dialog',
+            'CE': 'https://docs.google.com/forms/d/e/1FAIpQLSf4XxTT_Ibh9isDkYyYZ5tZA5anXZZp4a-cup0RmmKf3w-uYQ/viewform?usp=dialog',
+            'EEE': 'https://docs.google.com/forms/d/e/1FAIpQLSf4XxTT_Ibh9isDkYyYZ5tZA5anXZZp4a-cup0RmmKf3w-uYQ/viewform?usp=dialog'
+        };
+
+        function goToScreen(screenId) {
+            const container = document.querySelector('.hud-container');
+            container.style.opacity = 0;
+
+            setTimeout(() => {
+                document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+                document.getElementById(screenId).classList.add('active');
+                container.style.opacity = 1;
+            }, 200);
+        }
+
+        function selectDept(dept) {
+            currentDept = dept;
+            document.getElementById('dept-display').innerHTML = `FACTION: <span style="color:var(--neon-pink)">${dept}</span>`;
+            goToScreen('screen-year');
+        }
+
+        function goToForm(year) {
+            const link = formLinks[currentDept];
+            if (link) {
+                document.body.innerHTML = `<div style="color:var(--neon-blue); display:flex; height:100vh; justify-content:center; align-items:center; font-family:'Courier New'; text-align:center;"><h3>CONNECTING TO<br>SERVER...</h3></div>`;
+
+                setTimeout(() => {
+                    window.location.href = link;
+                }, 1500);
+            } else {
+                alert("ERROR: LINK NOT FOUND");
+            }
+        }
+    </script>
+</body>
+
+</html>

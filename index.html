@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Development Workshop | IEEE Student Branch</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Modern futuristic fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="background-container">
+        <!-- Gradient Orbs -->
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        
+        <!-- Grid Overlay -->
+        <div class="grid-overlay"></div>
+        
+        <!-- Particle Container -->
+        <div class="particles" id="particles"></div>
+        
+        <!-- Scan Lines Effect -->
+        <div class="scan-lines"></div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <!-- IEEE Logo/Badge -->
+        <div class="ieee-badge animate-fade-in">
+            <div class="badge-glow"></div>
+            <span class="badge-text">IEEE</span>
+        </div>
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <!-- Decorative Lines -->
+            <div class="deco-line left"></div>
+            <div class="deco-line right"></div>
+
+            <!-- Main Title -->
+            <h1 class="main-title animate-slide-up">
+                <span class="title-accent">GAME</span>
+                <span class="title-main">DEVELOPMENT</span>
+                <span class="title-sub">WORKSHOP</span>
+            </h1>
+
+            <!-- Subtitle -->
+            <p class="subtitle animate-slide-up delay-1">
+                <span class="subtitle-icon">◆</span>
+                Organized by IEEE Student Branch
+                <span class="subtitle-icon">◆</span>
+            </p>
+
+            <!-- Description -->
+            <div class="description-box animate-slide-up delay-2">
+                <p class="description">
+                    Dive into the world of game development! Learn industry-standard tools, 
+                    game design principles, and hands-on coding experience. Build your first 
+                    game and unlock your creative potential with expert guidance.
+                </p>
+                <div class="description-highlights">
+                    <span class="highlight-item">
+                        <span class="highlight-icon">🎮</span>
+                        Hands-on Projects
+                    </span>
+                    <span class="highlight-item">
+                        <span class="highlight-icon">💻</span>
+                        Industry Tools
+                    </span>
+                    <span class="highlight-item">
+                        <span class="highlight-icon">🏆</span>
+                        Certification
+                    </span>
+                    <span class="highlight-item">
+                        <a href="game.html"class="register-btn">
+                        Retro style
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Registration Section -->
+        <section class="registration-section animate-slide-up delay-3">
+            <div class="registration-card">
+                <!-- Card Glow Effect -->
+                <div class="card-glow"></div>
+                
+                <!-- Card Header -->
+                <div class="card-header">
+                    <h2 class="card-title">SELECT YOUR DEPARTMENT</h2>
+                    <div class="card-divider"></div>
+                </div>
+
+                <!-- Department Selection -->
+                <div class="department-grid" id="departmentGrid">
+                    <button class="dept-btn" data-dept="CSE">
+                        <span class="dept-icon">⌨️</span>
+                        <span class="dept-name">CSE</span>
+                        <span class="dept-full">Computer Science</span>
+                    </button>
+                
+                    </button>
+                    <button class="dept-btn" data-dept="EEE">
+                        <span class="dept-icon">⚡</span>
+                        <span class="dept-name">EEE</span>
+                        <span class="dept-full">Electrical Engg</span>
+                    </button>
+                    <button class="dept-btn" data-dept="MECH">
+                        <span class="dept-icon">⚙️</span>
+                        <span class="dept-name">MECH</span>
+                        <span class="dept-full">Mechanical Engg</span>
+                    </button>
+                    <button class="dept-btn" data-dept="CIVIL">
+                        <span class="dept-icon">🏗️</span>
+                        <span class="dept-name">CIVIL</span>
+                        <span class="dept-full">Civil Engineering</span>
+                    </button>
+                    
+                </div>
+
+                <!-- Selected Department Display -->
+                <div class="selected-display" id="selectedDisplay">
+                    <span class="selected-label">Selected:</span>
+                    <span class="selected-value" id="selectedValue">None</span>
+                </div>
+
+                <!-- Error Message -->
+                <div class="error-message" id="errorMessage">
+                    <span class="error-icon">⚠️</span>
+                    Please select a department before registering
+                </div>
+
+                <!-- Register Button -->
+                <button class="register-btn" id="registerBtn">
+                    <span class="btn-bg"></span>
+                    <span class="btn-text">
+                        <span class="btn-icon">🚀</span>
+                        REGISTER NOW
+                    </span>
+                    <span class="btn-shine"></span>
+                </button>
+
+                <!-- Additional Info -->
+                <p class="form-note">
+                    You will be redirected to our secure Google Form
+                </p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer animate-fade-in delay-4">
+            <div class="footer-content">
+                <p class="footer-text">© 2026 IEEE Student Branch | Game Development Workshop</p>
+                <div class="footer-links">
+                    <a href="#" class="footer-link">About IEEE</a>
+                    <span class="footer-divider">|</span>
+                    <a href="#" class="footer-link">Contact Us</a>
+                    <span class="footer-divider">|</span>
+                    <a href="#" class="footer-link">Privacy Policy</a>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loader">
+            <div class="loader-ring"></div>
+            <div class="loader-ring"></div>
+            <div class="loader-ring"></div>
+            <span class="loader-text">LOADING</span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
